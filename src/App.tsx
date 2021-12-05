@@ -1,12 +1,16 @@
-import Layout from './components/Layout';
-import GlobalStyles from './styles/GlobalStyles';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Channel from "./pages/Channel";
+import GlobalStyles from "./styles/GlobalStyles";
 
 function App() {
   return (
     <>
-      <Layout/>
-
       <GlobalStyles />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/channels" element={<Channel />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
