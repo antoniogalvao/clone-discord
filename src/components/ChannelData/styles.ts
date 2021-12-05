@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { AlternateEmail } from 'styled-icons/material';
+import styled from "styled-components";
+import { AlternateEmail } from "styled-icons/material";
 
 export const Container = styled.div`
   grid-area: CD;
@@ -31,6 +31,8 @@ export const Messages = styled.div`
 
   ::-webkit-scrollbar-track {
     background-color: var(--secondary);
+    border-radius: 4px;
+    margin-top: 4px;
   }
 `;
 
