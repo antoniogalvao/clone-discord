@@ -17,11 +17,11 @@ import {
   TextContainer,
 } from "./styles";
 
-const Home: React.FC = () => {
+export const Home: React.FC = () => {
   const navigate = useNavigate();
 
   function handleRedirectLogin() {
-    navigate("/channels/id_here");
+    navigate("/login");
   }
 
   return (
@@ -61,5 +61,3 @@ const Home: React.FC = () => {
     </Container>
   );
 };
-
-export default Home;

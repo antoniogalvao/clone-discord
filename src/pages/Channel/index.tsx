@@ -10,7 +10,7 @@ import UserInfo from "../../components/UserInfo";
 import UserList from "../../components/UserList";
 import ChannelData from "../../components/ChannelData";
 
-const Layout: React.FC = () => {
+export const Channel: React.FC = () => {
   return (
     <Grid>
       <ServerList />
@@ -23,5 +23,3 @@ const Layout: React.FC = () => {
     </Grid>
   );
 };
-
-export default Layout;
