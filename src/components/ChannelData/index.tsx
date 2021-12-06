@@ -1,10 +1,14 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from "react";
 
-import ChannelMessage, { Mention } from '../ChannelMessage';
+import ChannelMessage, { Mention } from "../ChannelMessage";
 
-import { Container, Messages, InputWrapper, Input, InputIcon } from './styles';
+import { Container, Messages, InputWrapper, Input, InputIcon } from "./styles";
 
-const ChannelData: React.FC = () => {
+type ChannelDataProps = {
+  email?: string | undefined | null;
+};
+
+function ChannelData(props: ChannelDataProps) {
   const messagesRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   useEffect(() => {
@@ -13,18 +17,17 @@ const ChannelData: React.FC = () => {
     if (div) {
       div.scrollTop = div.scrollHeight;
     }
-  }, [messagesRef])
+  }, [messagesRef]);
 
   return (
     <Container>
       <Messages ref={messagesRef}>
-
         {Array.from(Array(15).keys()).map((n) => (
           <ChannelMessage
             key={n}
-            author="Antonio Galvão"
+            author={props.email ? props.email : "Not found"}
             date="08/01/2021"
-            content="Hoje é o meu aniversário!"
+            content="Lorem ipsum dolor sit amet"
           />
         ))}
 
@@ -33,7 +36,7 @@ const ChannelData: React.FC = () => {
           date="08/01/2021"
           content={
             <>
-              <Mention>@Antonio Galvão</Mention>, me carrega no Dota e CS de novo por favor?
+              <Mention>@Antonio Galvão</Mention>, how are you?
             </>
           }
         />
@@ -45,6 +48,6 @@ const ChannelData: React.FC = () => {
       </InputWrapper>
     </Container>
   );
-};
+}
 
 export default ChannelData;

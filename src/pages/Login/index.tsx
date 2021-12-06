@@ -1,6 +1,5 @@
 import React, { FormEvent, useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../services/firebase";
+import { useAuth } from "../../hooks/useAuth";
 
 import {
   Container,
@@ -16,21 +15,24 @@ import {
 import { useNavigate } from "react-router";
 
 export const Login: React.FC = () => {
+  const { user, signin } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  async function handleLogin(event: FormEvent) {
+  function handleLogin(event: FormEvent) {
     event.preventDefault();
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+    signin(email, password)
+      .then((user) => {
         navigate("/channels/id_here");
       })
       .catch((error) => {
         console.log(error);
         alert(error.message);
       });
+
+    console.log(user);
   }
 
   return (

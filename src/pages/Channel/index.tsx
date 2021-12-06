@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Grid } from "./styles";
 
 import ServerList from "../../components/ServerList";
@@ -10,7 +8,11 @@ import UserInfo from "../../components/UserInfo";
 import UserList from "../../components/UserList";
 import ChannelData from "../../components/ChannelData";
 
-export const Channel: React.FC = () => {
+import { useAuth } from "../../hooks/useAuth";
+
+export function Channel() {
+  const { user } = useAuth();
+
   return (
     <Grid>
       <ServerList />
@@ -18,8 +20,8 @@ export const Channel: React.FC = () => {
       <ChannelInfo />
       <ChannelList />
       <UserInfo />
-      <ChannelData />
+      <ChannelData email={user?.email} />
       <UserList />
     </Grid>
   );
-};
+}
