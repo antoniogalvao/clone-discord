@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Channel from "./pages/Channel";
+import Home from "./pages/Home";
 import GlobalStyles from "./styles/GlobalStyles";
 
 function App() {
@@ -8,7 +9,8 @@ function App() {
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-          <Route path="/channels" element={<Channel />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/channels/:id" element={<Channel />} />
         </Routes>
       </BrowserRouter>
     </>
