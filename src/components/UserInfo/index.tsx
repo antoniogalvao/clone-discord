@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import { useNavigate } from "react-router";
 
 import {
   Container,
@@ -8,10 +9,16 @@ import {
   Icons,
   MicIcon,
   HeadphoneIcon,
-  SettingsIcon
-} from './styles';
+  SettingsIcon,
+} from "./styles";
 
 const UserInfo: React.FC = () => {
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    navigate("/login");
+  }
+
   return (
     <Container>
       <Profile>
@@ -25,7 +32,7 @@ const UserInfo: React.FC = () => {
       <Icons>
         <MicIcon />
         <HeadphoneIcon />
-        <SettingsIcon />
+        <SettingsIcon onClick={handleLogout} />
       </Icons>
     </Container>
   );

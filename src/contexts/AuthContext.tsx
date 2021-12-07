@@ -10,6 +10,7 @@ type AuthContextType = {
   user: User | undefined;
   signin: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string, username: string) => Promise<void>;
+  signout: () => Promise<void>;
 };
 
 type AuthContextProviderProps = {
@@ -24,9 +25,9 @@ function AuthContextProvider(props: AuthContextProviderProps) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        const { displayName, photoURL, uid } = user;
+        const { displayName, uid } = user;
 
-        if (!displayName || !photoURL) {
+        if (!displayName) {
           throw new Error("Missing information from account.");
         }
 
@@ -65,7 +66,7 @@ function AuthContextProvider(props: AuthContextProviderProps) {
       .createUserWithEmailAndPassword(email, password)
       .then(function (result) {
         if (result.user) {
-          return result.user.updateProfile({ displayName: username });
+          result.user.updateProfile({ displayName: username });
         }
       })
       .catch(function (error) {
@@ -73,8 +74,17 @@ function AuthContextProvider(props: AuthContextProviderProps) {
       });
   };
 
+  const signout = async () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        setUser(undefined);
+      });
+  };
+
   return (
-    <AuthContext.Provider value={{ user, signin, signup }}>
+    <AuthContext.Provider value={{ user, signin, signup, signout }}>
       {props.children}
     </AuthContext.Provider>
   );
