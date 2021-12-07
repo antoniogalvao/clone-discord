@@ -9,21 +9,20 @@ import {
   TextInputWrapper,
   TextInput,
   LoginButton,
-  FormFooter,
-  Link,
 } from "./styles";
 import { useNavigate } from "react-router";
 
-export const Login: React.FC = () => {
-  const { user, signin } = useAuth();
+export const Signup: React.FC = () => {
+  const { user, signup } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleLogin(event: FormEvent) {
+  function handleSignup(event: FormEvent) {
     event.preventDefault();
 
-    signin(email, password)
+    signup(email, password, username)
       .then((user) => {
         navigate("/channels/id_here");
       })
@@ -39,30 +38,35 @@ export const Login: React.FC = () => {
     <Container>
       <Content>
         <ContentHeader>
-          <h3>Welcome back!</h3>
-          <p>We're so excited to see you again!</p>
+          <h3>Create an account</h3>
         </ContentHeader>
-        <Form onSubmit={handleLogin}>
+        <Form onSubmit={handleSignup}>
           <TextInputWrapper>
-            <h5>Email or phone number</h5>
+            <h5>Email</h5>
             <TextInput
               type="email"
               onChange={(event) => setEmail(event.target.value)}
               value={email}
             />
           </TextInputWrapper>
-          <h5>Password</h5>
-          <TextInput
-            type="password"
-            onChange={(event) => setPassword(event.target.value)}
-            value={password}
-          />
-          <Link href="/">Forgot your password?</Link>
-          <LoginButton type="submit">Login</LoginButton>
-          <FormFooter>
-            <span>Need an account? </span>
-            <Link href="/register">Register</Link>
-          </FormFooter>
+          <TextInputWrapper>
+            <h5>Username</h5>
+            <TextInput
+              type="text"
+              onChange={(event) => setUsername(event.target.value)}
+              value={username}
+            />
+          </TextInputWrapper>
+
+          <TextInputWrapper>
+            <h5>Password</h5>
+            <TextInput
+              type="password"
+              onChange={(event) => setPassword(event.target.value)}
+              value={password}
+            />
+          </TextInputWrapper>
+          <LoginButton type="submit">Signup</LoginButton>
         </Form>
       </Content>
     </Container>

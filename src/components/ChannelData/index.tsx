@@ -1,14 +1,12 @@
 import React, { useRef, useEffect } from "react";
+import { useAuth } from "../../hooks/useAuth";
 
 import ChannelMessage, { Mention } from "../ChannelMessage";
 
 import { Container, Messages, InputWrapper, Input, InputIcon } from "./styles";
 
-type ChannelDataProps = {
-  email?: string | undefined | null;
-};
-
-function ChannelData(props: ChannelDataProps) {
+function ChannelData() {
+  const { user } = useAuth();
   const messagesRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   useEffect(() => {
@@ -25,7 +23,7 @@ function ChannelData(props: ChannelDataProps) {
         {Array.from(Array(15).keys()).map((n) => (
           <ChannelMessage
             key={n}
-            author={props.email ? props.email : "Not found"}
+            author={user?.username}
             date="08/01/2021"
             content="Lorem ipsum dolor sit amet"
           />

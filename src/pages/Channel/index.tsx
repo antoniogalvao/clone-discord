@@ -9,9 +9,15 @@ import UserList from "../../components/UserList";
 import ChannelData from "../../components/ChannelData";
 
 import { useAuth } from "../../hooks/useAuth";
+import { useNavigate } from "react-router";
 
 export function Channel() {
   const { user } = useAuth();
+  const navigate = useNavigate();
+
+  if (!user) {
+    navigate("/");
+  }
 
   return (
     <Grid>
@@ -20,7 +26,7 @@ export function Channel() {
       <ChannelInfo />
       <ChannelList />
       <UserInfo />
-      <ChannelData email={user?.email} />
+      <ChannelData />
       <UserList />
     </Grid>
   );
