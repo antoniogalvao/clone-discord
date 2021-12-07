@@ -36,7 +36,7 @@ export const Messages = styled.div`
   }
 `;
 
-export const InputWrapper = styled.div`
+export const InputWrapper = styled.form`
   width: 100%;
 
   padding: 0 16px;
