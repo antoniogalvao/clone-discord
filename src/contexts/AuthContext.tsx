@@ -1,5 +1,5 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
-import { firebase, auth } from "../services/firebase";
+import { createContext, ReactNode, useEffect, useState } from 'react';
+import { firebase, auth } from '../services/firebase';
 
 type User = {
   id: string;
@@ -8,9 +8,9 @@ type User = {
 
 type AuthContextType = {
   user: User | undefined;
-  signin: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string, username: string) => Promise<void>;
-  signout: () => Promise<void>;
+  signIn: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string, username: string) => Promise<void>;
+  signOut: () => Promise<void>;
 };
 
 type AuthContextProviderProps = {
@@ -28,7 +28,7 @@ function AuthContextProvider(props: AuthContextProviderProps) {
         const { displayName, uid } = user;
 
         if (!displayName) {
-          throw new Error("Missing information from account.");
+          throw new Error('Missing information from account.');
         }
 
         setUser({
@@ -43,38 +43,42 @@ function AuthContextProvider(props: AuthContextProviderProps) {
     });
   }, []);
 
-  // Wrap any Firebase methods we want to use making sure ...
-  // ... to save the user to state.
-  const signin = async (email: string, password: string) => {
-    const response = await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password);
-    if (response.user) {
-      if (!response.user.displayName) {
-        throw new Error("Missing information from Account.");
+  const signIn = async (email: string, password: string) => {
+    try {
+      const response = await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password);
+      if (response.user) {
+        if (!response.user.displayName) {
+          throw new Error('Missing information from Account.');
+        }
+        setUser({
+          id: response.user.uid,
+          username: response.user.displayName,
+        });
       }
-      setUser({
-        id: response.user.uid,
-        username: response.user.displayName,
-      });
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const signup = async (email: string, password: string, username: string) => {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(function (result) {
-        if (result.user) {
-          result.user.updateProfile({ displayName: username });
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  const signUp = async (email: string, password: string, username: string) => {
+    try {
+      const response = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password);
+
+      if (response.user) {
+        await response.user?.updateProfile({ displayName: username });
+
+        setUser({ username, id: response.user?.uid });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const signout = async () => {
+  const signOut = async () => {
     firebase
       .auth()
       .signOut()
@@ -84,7 +88,7 @@ function AuthContextProvider(props: AuthContextProviderProps) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, signin, signup, signout }}>
+    <AuthContext.Provider value={{ user, signIn, signUp, signOut }}>
       {props.children}
     </AuthContext.Provider>
   );

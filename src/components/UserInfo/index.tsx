@@ -1,5 +1,6 @@
-import React from "react";
-import { useNavigate } from "react-router";
+import React from 'react';
+import { useNavigate } from 'react-router';
+import { useAuth } from '../../hooks/useAuth';
 
 import {
   Container,
@@ -10,13 +11,15 @@ import {
   MicIcon,
   HeadphoneIcon,
   SettingsIcon,
-} from "./styles";
+} from './styles';
 
 const UserInfo: React.FC = () => {
   const navigate = useNavigate();
+  const { user, signOut } = useAuth();
 
   function handleLogout() {
-    navigate("/login");
+    signOut();
+    navigate('/login');
   }
 
   return (
@@ -24,7 +27,7 @@ const UserInfo: React.FC = () => {
       <Profile>
         <Avatar />
         <UserData>
-          <strong>Antonio Galvão</strong>
+          <strong>{user?.username}</strong>
           <span>#3540</span>
         </UserData>
       </Profile>
