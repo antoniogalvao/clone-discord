@@ -25,7 +25,7 @@ export const Login: React.FC = () => {
 
     try {
       await signIn(email, password);
-      navigate('/channels/id_here');
+      navigate('/channels/:id_here');
     } catch (error) {
       alert(error);
     }
